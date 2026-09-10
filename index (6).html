@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Caducada — Digital Invita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Variables exactas del sitio ── */
+:root {
+  --v:      #8B2EF8;
+  --v2:     #A855F7;
+  --v3:     #EDE9FE;
+  --pk:     #F0287C;
+  --tl:     #06D6A0;
+  --bg:     #FAFAFA;
+  --white:  #FFFFFF;
+  --dark:   #0D0420;
+  --dark2:  #1E0A38;
+  --mid:    #4B3866;
+  --muted:  #8B7BA8;
+  --border: rgba(139,46,248,0.12);
+  --wa:     #25D366;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+}
+
+/* ══════════════════════════════
+   OVERLAY — mismo estilo que
+   el nav: frosted glass claro
+   ══════════════════════════════ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(250, 250, 250, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 500;
+
+  /* Mismo radial glow del hero */
+  background-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    rgba(139,46,248,0.07) 0%,
+    transparent 65%
+  );
+}
+
+/* ══════════════════════════════
+   CARD
+   ══════════════════════════════ */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem 3.2rem 2.8rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 2px 4px rgba(139,46,248,0.04),
+    0 12px 40px rgba(139,46,248,0.1),
+    0 32px 80px rgba(0,0,0,0.06);
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow sutil en la esquina superior — igual que demo-section::before */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,46,248,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Logo ── */
+.logo {
+  display: block;
+  height: 34px;
+  width: auto;
+  margin: 0 auto 2.2rem;
+}
+
+/* ── Pill / chip — idéntico al .hero-pill y .section-pill del sitio ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--v3);
+  color: var(--v);
+  border: 1px solid rgba(139,46,248,0.2);
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.pill-dot {
+  position: relative;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--v);
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.pill-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--v);
+  opacity: 0;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.2); opacity: 0.8; }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.5); opacity: 0.5; }
+  70%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ── Heading — Fraunces weight 300 como el sitio ── */
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+h1 em {
+  font-style: italic;
+  color: var(--v);
+}
+
+/* ── Body text ── */
+.desc {
+  font-size: 0.93rem;
+  line-height: 1.8;
+  color: var(--mid);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Divider ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 0 2rem;
+}
+
+/* ── Botón primario — idéntico al .btn-primary del sitio ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--v);
+  color: #fff;
+  padding: 0.9rem 2.4rem;
+  border-radius: 50px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background .2s, transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(139,46,248,0.35);
+  margin-bottom: 0.85rem;
+}
+.btn-primary:hover {
+  background: var(--dark2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139,46,248,0.4);
+}
+.btn-primary svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ── Botón ghost — idéntico al .btn-ghost del sitio ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid var(--v);
+  color: var(--v);
+  padding: 0.9rem 2.4rem;
+  border-radius: 50px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+.btn-ghost:hover {
+  background: var(--v3);
+  transform: translateY(-2px);
+}
+.btn-ghost svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ── Acciones ── */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ── Footer note ── */
+.footer-note {
+  margin-top: 2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 500px) {
+  .overlay { padding: 1.2rem; align-items: center; }
+
+  .card {
+    padding: 2.2rem 1.6rem 2.4rem;
+    border-radius: 20px;
+    max-width: 100%;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .logo { height: 28px; margin-bottom: 1.6rem; }
+  h1 { font-size: 2rem; }
+
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    font-size: 0.92rem;
+  }
+
+  .desc { font-size: 0.9rem; margin-bottom: 1.6rem; }
+  .footer-note { margin-top: 1.5rem; font-size: 0.6rem; letter-spacing: 0.05em; }
+  .footer-note .sep, .footer-note .sub { display: inline; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay">
+  <div class="card">
+
+    <!-- Logo -->
+    <img
+      class="logo"
+      src="https://digitalinvita.com.mx/logo.png"
+      alt="Digital Invita"
+    >
+
+    <!-- Pill — igual al hero-pill del sitio -->
+    <div class="pill">
+      <span class="pill-dot"></span>
+      Demo caducada
+    </div>
+
+    <!-- Heading Fraunces, italic en purple -->
+    <h1>Tu invitación<br><em>te espera</em></h1>
+
+    <!-- Descripción -->
+    <p class="desc">
+      El período de vista previa de esta demo ha concluido.
+      Elige un paquete para activar tu invitación y compartirla con tus invitados.
+    </p>
+
+    <hr>
+
+    <!-- Botones -->
+    <div class="actions">
+
+      <!-- Primario — idéntico al "Ver paquetes" del sitio -->
+      <a href="https://digitalinvita.com.mx/#paquetes" class="btn-primary">
+        Ver paquetes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+
+      <!-- Ghost — estilo WhatsApp con verde del sitio -->
+      <a
+        href="https://wa.me/525550591264?text=Hola!%20Mi%20demo%20ha%20caducado%2C%20quisiera%20activar%20mi%20paquete."
+        class="btn-ghost"
+        target="_blank"
+        style="border-color:#25D366;color:#25D366;"
+        onmouseover="this.style.background='#f0fdf4'"
+        onmouseout="this.style.background=''"
+      >
+        <!-- WhatsApp icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.556 4.118 1.528 5.845L.057 23.882l6.162-1.618A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.672-.502-5.205-1.378l-.374-.221-3.87 1.015 1.033-3.769-.244-.388A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        Contactar por WhatsApp
+      </a>
+
+    </div>
+
+    <!-- Footer note -->
+    <p class="footer-note">Digital Invita <span class="sep">&nbsp;·&nbsp;</span><span class="sub">Invitaciones digitales &nbsp;·&nbsp; México</span></p>
+
+  </div>
+</div>
+
+</body>
+</html>
